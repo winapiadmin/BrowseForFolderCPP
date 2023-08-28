@@ -12,50 +12,6 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// CAboutDlg dialog used for App About
-
-class CAboutDlg : public CDialog
-{
-public:
-	CAboutDlg();
-
-// Dialog Data
-	//{{AFX_DATA(CAboutDlg)
-	enum { IDD = IDD_ABOUTBOX };
-	//}}AFX_DATA
-
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CAboutDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-	//{{AFX_MSG(CAboutDlg)
-	virtual void OnOK();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
-};
-
-CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
-{
-	//{{AFX_DATA_INIT(CAboutDlg)
-	//}}AFX_DATA_INIT
-}
-
-void CAboutDlg::DoDataExchange(CDataExchange* pDX)
-{
-	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CAboutDlg)
-	//}}AFX_DATA_MAP
-}
-
-BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
-	//{{AFX_MSG_MAP(CAboutDlg)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
-/////////////////////////////////////////////////////////////////////////////
 // CTestMFCDlg dialog
 
 CTestMFCDlg::CTestMFCDlg(CWnd* pParent /*=NULL*/)
@@ -126,15 +82,7 @@ BOOL CTestMFCDlg::OnInitDialog()
 
 void CTestMFCDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
-	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
-	{
-		CAboutDlg dlgAbout;
-		dlgAbout.DoModal();
-	}
-	else
-	{
-		CDialog::OnSysCommand(nID, lParam);
-	}
+	CDialog::OnSysCommand(nID, lParam);
 }
 
 // If you add a minimize button to your dialog, you will need the code below
@@ -195,8 +143,7 @@ void DisplayErrorBox(LPTSTR lpszFunction)
 
     lpDisplayBuf = (LPVOID)LocalAlloc(LMEM_ZEROINIT, 
         (lstrlen((LPCTSTR)lpMsgBuf)+lstrlen((LPCTSTR)lpszFunction)+40)*sizeof(TCHAR)); 
-    StringCchPrintf((LPTSTR)lpDisplayBuf, 
-        LocalSize(lpDisplayBuf) / sizeof(TCHAR),
+    sprintf((LPTSTR)lpDisplayBuf, 
         TEXT("%s failed with error %d: %s"), 
         lpszFunction, dw, lpMsgBuf); 
     MessageBox(NULL, (LPCTSTR)lpDisplayBuf, TEXT("Error"), MB_OK); 
@@ -228,9 +175,9 @@ void CTestMFCDlg::OnButton1()
 			size_t length_of_arg;
 			HANDLE hFind = INVALID_HANDLE_VALUE;
 			DWORD dwError=0;
-			StringCchLength(tszPath, MAX_PATH, &length_of_arg);
-			StringCchCopy(szDir, MAX_PATH, tszPath);
-			StringCchCat(szDir, MAX_PATH, TEXT("\\*"));
+			length_of_arg=strlen(tszPath);
+			strcpy(szDir, tszPath);
+			strcat(szDir, TEXT("\\*"));
 			hFind = FindFirstFile(szDir, &ffd);
 			if (INVALID_HANDLE_VALUE == hFind) 
 			{
@@ -268,13 +215,6 @@ void CTestMFCDlg::OnButton1()
 }
 
 void CTestMFCDlg::OnOK() 
-{
-	// TODO: Add extra validation here
-	
-	CDialog::OnOK();
-}
-
-void CAboutDlg::OnOK() 
 {
 	// TODO: Add extra validation here
 	

@@ -12,11 +12,10 @@ Class1=CTestMFCApp
 Class2=CTestMFCDlg
 Class3=CAboutDlg
 
-ResourceCount=3
-Resource1=IDD_ABOUTBOX
-Resource2=IDR_MAINFRAME
+ResourceCount=2
+Resource1=IDR_MAINFRAME
 Class4=CMFCMenu
-Resource3=IDD_TESTMFC_DIALOG
+Resource2=IDD_TESTMFC_DIALOG
 
 [CLS:CTestMFCApp]
 Type=0
@@ -41,15 +40,6 @@ Filter=D
 LastObject=IDOK
 BaseClass=CDialog
 VirtualFilter=dWC
-
-[DLG:IDD_ABOUTBOX]
-Type=1
-Class=CAboutDlg
-ControlCount=4
-Control1=IDC_STATIC,static,1342177283
-Control2=IDC_STATIC,static,1342308480
-Control3=IDC_STATIC,static,1342308352
-Control4=IDOK,button,1342373889
 
 [DLG:IDD_TESTMFC_DIALOG]
 Type=1
