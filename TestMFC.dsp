@@ -132,6 +132,14 @@ SOURCE=.\TestMFCDlg.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
+SOURCE=.\default1.bin
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\default1.bin
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\TestMFC.ico
 # End Source File
 # Begin Source File
@@ -139,6 +147,10 @@ SOURCE=.\res\TestMFC.ico
 SOURCE=.\res\TestMFC.rc2
 # End Source File
 # End Group
+# Begin Source File
+
+SOURCE=.\app.manifest
+# End Source File
 # Begin Source File
 
 SOURCE=.\ReadMe.txt

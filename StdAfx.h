@@ -19,8 +19,7 @@
 #ifndef _AFX_NO_AFXCMN_SUPPORT
 #include <afxcmn.h>			// MFC support for Windows Common Controls
 #endif // _AFX_NO_AFXCMN_SUPPORT
-#include <winbase.h>
-#include <winnt.h>			// Header to use SecureZeroMemory
+#include <strsafe.h>
 #include <afxsock.h>		// MFC socket extensions
 
 //{{AFX_INSERT_LOCATION}}

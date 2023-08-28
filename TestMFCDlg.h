@@ -20,7 +20,9 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CTestMFCDlg)
 	enum { IDD = IDD_TESTMFC_DIALOG };
-		// NOTE: the ClassWizard will add data members here
+	CProgressCtrl	m_Prog;
+	CListBox	m_Folder;
+	CListBox	m_File;
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
@@ -30,9 +32,8 @@ public:
 	//}}AFX_VIRTUAL
 
 // Implementation
-protected:
 	HICON m_hIcon;
-
+protected:
 	// Generated message map functions
 	//{{AFX_MSG(CTestMFCDlg)
 	virtual BOOL OnInitDialog();
@@ -40,6 +41,8 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	afx_msg void OnButton1();
+	virtual void OnOK();
+	afx_msg void OnButton2();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

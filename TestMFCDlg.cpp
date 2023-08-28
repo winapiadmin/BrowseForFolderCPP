@@ -31,8 +31,8 @@ public:
 	//}}AFX_VIRTUAL
 
 // Implementation
-protected:
 	//{{AFX_MSG(CAboutDlg)
+	virtual void OnOK();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -52,7 +52,6 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 	//{{AFX_MSG_MAP(CAboutDlg)
-		// No message handlers
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -73,7 +72,8 @@ void CTestMFCDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CTestMFCDlg)
-		// NOTE: the ClassWizard will add DDX and DDV calls here
+	DDX_Control(pDX, IDC_LIST2, m_Folder);
+	DDX_Control(pDX, IDC_LIST1, m_File);
 	//}}AFX_DATA_MAP
 }
 
@@ -114,7 +114,6 @@ BOOL CTestMFCDlg::OnInitDialog()
 	iccex.dwSize=sizeof(iccex);
 	iccex.dwICC=0xFDFF;
 	InitCommonControlsEx(&iccex);
-	
 	// Set the icon for this dialog.  The framework does this automatically
 	//  when the application's main window is not a dialog
 	SetIcon(m_hIcon, TRUE);			// Set big icon
@@ -174,11 +173,45 @@ HCURSOR CTestMFCDlg::OnQueryDragIcon()
 	return (HCURSOR) m_hIcon;
 }
 
+void DisplayErrorBox(LPTSTR lpszFunction) 
+{ 
+    // Retrieve the system error message for the last-error code
+
+    LPVOID lpMsgBuf;
+    LPVOID lpDisplayBuf;
+    DWORD dw = GetLastError(); 
+
+    FormatMessage(
+        FORMAT_MESSAGE_ALLOCATE_BUFFER | 
+        FORMAT_MESSAGE_FROM_SYSTEM |
+        FORMAT_MESSAGE_IGNORE_INSERTS,
+        NULL,
+        dw,
+        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+        (LPTSTR) &lpMsgBuf,
+        0, NULL );
+
+    // Display the error message and clean up
+
+    lpDisplayBuf = (LPVOID)LocalAlloc(LMEM_ZEROINIT, 
+        (lstrlen((LPCTSTR)lpMsgBuf)+lstrlen((LPCTSTR)lpszFunction)+40)*sizeof(TCHAR)); 
+    StringCchPrintf((LPTSTR)lpDisplayBuf, 
+        LocalSize(lpDisplayBuf) / sizeof(TCHAR),
+        TEXT("%s failed with error %d: %s"), 
+        lpszFunction, dw, lpMsgBuf); 
+    MessageBox(NULL, (LPCTSTR)lpDisplayBuf, TEXT("Error"), MB_OK); 
+
+    LocalFree(lpMsgBuf);
+    LocalFree(lpDisplayBuf);
+}
+
 void CTestMFCDlg::OnButton1() 
 {
+	m_File.ResetContent();
+	m_Folder.ResetContent();
 	BROWSEINFO bi = {0};
 
-	bi.lpszTitle = _T("Browse for Folder");
+	bi.lpszTitle = _T("Select a Folder");
 
 	LPITEMIDLIST pidl = SHBrowseForFolder(&bi);
 
@@ -189,6 +222,61 @@ void CTestMFCDlg::OnButton1()
 		if ( SHGetPathFromIDList(pidl, tszPath) == TRUE )
 		{
 			SetDlgItemText(IDC_EDIT1,tszPath);
+			WIN32_FIND_DATAA ffd;
+			LARGE_INTEGER filesize;
+			TCHAR szDir[MAX_PATH];
+			size_t length_of_arg;
+			HANDLE hFind = INVALID_HANDLE_VALUE;
+			DWORD dwError=0;
+			StringCchLength(tszPath, MAX_PATH, &length_of_arg);
+			StringCchCopy(szDir, MAX_PATH, tszPath);
+			StringCchCat(szDir, MAX_PATH, TEXT("\\*"));
+			hFind = FindFirstFile(szDir, &ffd);
+			if (INVALID_HANDLE_VALUE == hFind) 
+			{
+			  DisplayErrorBox(TEXT("FindFirstFile"));
+			} 
+
+			// List all the files in the directory with some info about them.
+
+			do
+			{
+			  if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+			  {
+				 m_Folder.AddString((LPCTSTR)ffd.cFileName);
+			  }
+			  else
+			  {
+				 filesize.LowPart = ffd.nFileSizeLow;
+				 filesize.HighPart = ffd.nFileSizeHigh;
+
+				 m_File.AddString((LPCTSTR)ffd.cFileName);
+			  }
+			}
+			while (FindNextFile(hFind, &ffd) != 0);
+
+			dwError = GetLastError();
+			if (dwError != ERROR_NO_MORE_FILES) 
+			{
+			  DisplayErrorBox(TEXT("FindFirstFile"));
+			}
+
+			FindClose(hFind);
 		}
 	}
+
+}
+
+void CTestMFCDlg::OnOK() 
+{
+	// TODO: Add extra validation here
+	
+	CDialog::OnOK();
+}
+
+void CAboutDlg::OnOK() 
+{
+	// TODO: Add extra validation here
+	
+	CDialog::OnOK();
 }

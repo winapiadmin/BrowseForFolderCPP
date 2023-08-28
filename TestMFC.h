@@ -32,7 +32,7 @@ public:
 	//}}AFX_VIRTUAL
 
 // Implementation
-
+protected:
 	//{{AFX_MSG(CTestMFCApp)
 		// NOTE - the ClassWizard will add and remove member functions here.
 		//    DO NOT EDIT what you see in these blocks of generated code !
