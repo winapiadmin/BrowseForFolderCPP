@@ -1,0 +1,37 @@
+# Microsoft Developer Studio Generated Dependency File, included by TestMFC.mak
+
+.\MFCMenu.cpp : \
+	".\MFCMenu.h"\
+	".\TestMFC.h"\
+	
+
+.\StdAfx.cpp : \
+	".\StdAfx.h"\
+	"c:\program files (x86)\microsoft visual studio\vc98\include\concurrencysal.h"\
+	"c:\program files (x86)\microsoft visual studio\vc98\include\driverspecs.h"\
+	"c:\program files (x86)\microsoft visual studio\vc98\include\no_sal2.h"\
+	"c:\program files (x86)\microsoft visual studio\vc98\include\sal.h"\
+	"c:\program files (x86)\microsoft visual studio\vc98\include\sdv_driverspecs.h"\
+	"c:\program files (x86)\microsoft visual studio\vc98\include\specstrings.h"\
+	"c:\program files (x86)\microsoft visual studio\vc98\include\specstrings_strict.h"\
+	"c:\program files (x86)\microsoft visual studio\vc98\include\strsafe.h"\
+	"c:\program files (x86)\microsoft visual studio\vc98\include\winapifamily.h"\
+	"c:\program files (x86)\microsoft visual studio\vc98\include\winpackagefamily.h"\
+	"h:\program files (x86)\microsoft visual studio\vc98\include\basetsd.h"\
+	
+
+.\TestMFC.cpp : \
+	".\TestMFC.h"\
+	".\TestMFCDlg.h"\
+	
+
+.\TestMFC.rc : \
+	".\res\default1.bin"\
+	".\res\TestMFC.ico"\
+	".\res\TestMFC.rc2"\
+	
+
+.\TestMFCDlg.cpp : \
+	".\TestMFC.h"\
+	".\TestMFCDlg.h"\
+	
